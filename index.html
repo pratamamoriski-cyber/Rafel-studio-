@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAFEL STUDIO | Solusi Kreatif Digital</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-red: #ff0000;
+            --dark-red: #990000;
+            --bg-black: #050505;
+            --card-bg: #121212;
+            --text-gray: #b0b0b0;
+            --white: #ffffff;
+            --status-green: #44ff44;
+        }
+        @keyframes fadeInUp { from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);} }
+        @keyframes fadeIn { from{opacity:0;}to{opacity:1;} }
+        @keyframes glow { 0%{box-shadow:0 0 5px var(--dark-red);}50%{box-shadow:0 0 20px var(--primary-red);}100%{box-shadow:0 0 5px var(--dark-red);} }
+        @keyframes slideDown { from{opacity:0;transform:translateY(-10px);}to{opacity:1;transform:translateY(0);} }
+        @keyframes spin { to{transform:rotate(360deg);} }
+
+        * { margin:0; padding:0; box-sizing:border-box; scroll-behavior:smooth; }
+        body { background-color:var(--bg-black); color:var(--white); line-height:1.6; overflow-x:hidden; font-family:'DM Sans',sans-serif; }
+
+        /* NAV */
+        nav { background:rgba(0,0,0,0.95); padding:0 5%; display:flex; justify-content:space-between; align-items:center; position:sticky; top:0; z-index:1000; border-bottom:1px solid var(--dark-red); backdrop-filter:blur(10px); height:60px; }
+        .logo { font-family:'Syne',sans-serif; font-weight:800; font-size:1.4rem; color:var(--primary-red); letter-spacing:1px; cursor:pointer; transition:0.3s; flex-shrink:0; }
+        .logo:hover { text-shadow:0 0 10px var(--primary-red); }
+        .nav-links { display:flex; align-items:center; gap:20px; }
+        .nav-links a { color:white; text-decoration:none; font-size:0.9rem; transition:0.3s; }
+        .nav-links a:hover { color:var(--primary-red); }
+        .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:5px; z-index:1100; }
+        .hamburger span { display:block; width:24px; height:2px; background:white; transition:0.3s; border-radius:2px; }
+        .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+        .hamburger.open span:nth-child(2){opacity:0;}
+        .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+        .mobile-menu { display:none; position:fixed; top:60px; left:0; right:0; background:rgba(0,0,0,0.97); border-bottom:1px solid var(--dark-red); z-index:999; padding:20px 5%; flex-direction:column; animation:slideDown 0.3s ease; }
+        .mobile-menu.open{display:flex;}
+        .mobile-menu a { color:white; text-decoration:none; padding:14px 0; border-bottom:1px solid #1a1a1a; font-size:1rem; display:flex; align-items:center; gap:12px; transition:0.2s; }
+        .mobile-menu a:last-child{border-bottom:none;}
+        .mobile-menu a:hover{color:var(--primary-red);padding-left:6px;}
+        .mobile-menu a i{width:20px;color:var(--primary-red);}
+
+        /* HERO */
+        .hero { padding:80px 5% 60px; background:linear-gradient(to bottom,#1a0000,var(--bg-black)); text-align:center; animation:fadeIn 1.5s ease-out; }
+        .hero h1 { font-family:'Syne',sans-serif; font-size:clamp(2rem,8vw,3.5rem); text-transform:uppercase; margin-bottom:10px; animation:fadeInUp 0.8s ease-out; line-height:1.1; }
+        .hero .subtitle { color:var(--primary-red); text-transform:uppercase; letter-spacing:4px; font-weight:600; font-size:clamp(0.7rem,2.5vw,0.9rem); animation:fadeInUp 0.6s ease-out; }
+        .hero .tagline { color:var(--text-gray); font-size:clamp(0.9rem,3vw,1.1rem); max-width:600px; margin:15px auto; animation:fadeInUp 1s ease-out; }
+        .hero-btns { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:25px; animation:fadeInUp 1.1s ease-out; }
+        .btn-primary { padding:12px 28px; background:var(--primary-red); color:white; border-radius:6px; text-decoration:none; font-weight:600; font-size:0.95rem; transition:0.3s; border:none; cursor:pointer; }
+        .btn-primary:hover{background:var(--dark-red);transform:translateY(-2px);}
+        .btn-outline { padding:12px 28px; background:transparent; color:white; border-radius:6px; text-decoration:none; font-weight:600; font-size:0.95rem; transition:0.3s; border:1px solid #444; }
+        .btn-outline:hover{border-color:var(--primary-red);color:var(--primary-red);transform:translateY(-2px);}
+
+        /* CONTAINER */
+        .container { width:90%; max-width:1200px; margin:auto; padding:40px 0; }
+        .section-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:30px; border-left:4px solid var(--primary-red); padding-left:15px; animation:fadeIn 1.2s; flex-wrap:wrap; gap:10px; }
+        .section-header h2 { font-family:'Syne',sans-serif; font-size:clamp(1.1rem,4vw,1.4rem); }
+
+        /* BADGE */
+        .badge { display:inline-block; font-size:0.65rem; font-weight:800; text-transform:uppercase; letter-spacing:1px; padding:3px 8px; border-radius:4px; margin-left:6px; vertical-align:middle; }
+        .badge-hot{background:var(--primary-red);color:white;animation:glow 2s infinite;}
+        .badge-new{background:#1a3a1a;color:#44ff44;border:1px solid #44ff44;}
+
+        /* PRODUCT CARDS */
+        .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:20px; }
+        .product-card { background:var(--card-bg); border-radius:12px; overflow:hidden; transition:all 0.4s cubic-bezier(0.175,0.885,0.32,1.275); border:1px solid #222; animation:fadeInUp 0.5s ease backwards; }
+        .product-card:hover{transform:translateY(-10px) scale(1.02);border-color:var(--primary-red);box-shadow:0 15px 30px rgba(255,0,0,0.2);}
+        .product-img-wrap{width:100%;height:180px;overflow:hidden;background:#252525;}
+        .product-img{width:100%;height:100%;object-fit:cover;transition:0.5s;display:block;}
+        .product-card:hover .product-img{transform:scale(1.1);}
+        .product-info{padding:18px;}
+        .product-category{color:var(--primary-red);font-size:0.7rem;text-transform:uppercase;font-weight:700;letter-spacing:1px;}
+        .product-title{font-size:1.1rem;margin:5px 0;font-weight:600;}
+        .price{color:var(--white);font-weight:700;font-size:1rem;}
+        .buy-btn { display:flex; align-items:center; justify-content:center; gap:8px; width:100%; padding:11px; background:var(--primary-red); color:white; text-align:center; text-decoration:none; border-radius:6px; margin-top:14px; font-weight:700; font-size:0.9rem; transition:0.3s; }
+        .buy-btn:hover{background:var(--dark-red);transform:scale(1.02);}
+
+        /* SEARCH & FILTER */
+        .controls{margin-bottom:25px;display:flex;gap:10px;flex-wrap:wrap;animation:fadeIn 1s;}
+        .search-bar{flex:1;min-width:200px;padding:11px 14px;border-radius:6px;border:1px solid #333;background:#1a1a1a;color:white;font-family:'DM Sans',sans-serif;font-size:0.9rem;transition:0.3s;}
+        .search-bar:focus{outline:none;border-color:var(--primary-red);box-shadow:0 0 10px rgba(255,0,0,0.2);}
+        .filter-wrap{display:flex;gap:8px;flex-wrap:wrap;}
+        .filter-btn{padding:9px 16px;background:#1a1a1a;border:1px solid #333;color:white;cursor:pointer;border-radius:6px;transition:0.3s;font-family:'DM Sans',sans-serif;font-size:0.85rem;white-space:nowrap;}
+        .filter-btn:hover{border-color:var(--primary-red);transform:translateY(-2px);}
+        .filter-btn.active{background:var(--primary-red);border-color:var(--primary-red);animation:glow 2s infinite;}
+
+        /* PORTO */
+        .porto-section{margin-top:50px;}
+        .porto-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;}
+        .porto-card{position:relative;border-radius:10px;overflow:hidden;border:1px solid #222;aspect-ratio:16/10;cursor:pointer;transition:0.3s;}
+        .porto-card:hover{border-color:var(--primary-red);transform:translateY(-4px);}
+        .porto-card img{width:100%;height:100%;object-fit:cover;display:block;transition:0.4s;}
+        .porto-card:hover img{transform:scale(1.07);}
+        .porto-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.85) 0%,transparent 60%);display:flex;flex-direction:column;justify-content:flex-end;padding:14px;opacity:0;transition:0.3s;}
+        .porto-card:hover .porto-overlay{opacity:1;}
+        .porto-label{font-size:0.7rem;color:var(--primary-red);font-weight:700;text-transform:uppercase;}
+        .porto-title{font-size:0.95rem;font-weight:600;margin-top:2px;}
+        .porto-cta{display:inline-block;margin-top:8px;font-size:0.75rem;color:white;border:1px solid rgba(255,255,255,0.4);padding:4px 10px;border-radius:4px;text-decoration:none;transition:0.2s;}
+        .porto-cta:hover{border-color:var(--primary-red);color:var(--primary-red);}
+
+        /* ===================== RATING SECTION ===================== */
+        .rating-section { margin-top: 50px; }
+
+        /* Form kasih ulasan */
+        .rating-form-card {
+            background: var(--card-bg);
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 28px;
+            margin-bottom: 30px;
+            animation: fadeInUp 0.5s ease;
+        }
+        .rating-form-card h3 { font-family:'Syne',sans-serif; margin-bottom: 6px; font-size: 1.1rem; }
+        .rating-form-card p { color: var(--text-gray); font-size: 0.85rem; margin-bottom: 20px; }
+
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+        .form-input {
+            width: 100%; padding: 11px 14px; border-radius: 6px;
+            border: 1px solid #333; background: #1a1a1a; color: white;
+            font-family: 'DM Sans', sans-serif; font-size: 0.9rem; transition: 0.3s;
+        }
+        .form-input:focus { outline: none; border-color: var(--primary-red); box-shadow: 0 0 8px rgba(255,0,0,0.2); }
+        textarea.form-input { resize: vertical; min-height: 90px; }
+
+        /* Star selector */
+        .star-selector { display: flex; gap: 6px; margin-bottom: 16px; flex-direction: row-reverse; justify-content: flex-end; }
+        .star-selector input { display: none; }
+        .star-selector label {
+            font-size: 1.8rem; color: #333; cursor: pointer;
+            transition: 0.2s; user-select: none;
+        }
+        .star-selector label:hover,
+        .star-selector label:hover ~ label,
+        .star-selector input:checked ~ label { color: #ffcc00; }
+
+        .service-select {
+            width: 100%; padding: 11px 14px; border-radius: 6px;
+            border: 1px solid #333; background: #1a1a1a; color: white;
+            font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
+            margin-bottom: 12px; transition: 0.3s; appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23b0b0b0' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-position: right 14px center;
+        }
+        .service-select:focus { outline: none; border-color: var(--primary-red); }
+
+        .submit-btn {
+            width: 100%; padding: 12px; background: var(--primary-red);
+            color: white; border: none; border-radius: 6px; font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: 0.3s;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .submit-btn:hover { background: var(--dark-red); transform: translateY(-2px); }
+        .submit-btn:disabled { background: #333; color: #666; cursor: not-allowed; transform: none; }
+
+        /* Toast notif */
+        .toast {
+            position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%) translateY(20px);
+            background: #1a331a; color: #44ff44; padding: 12px 24px;
+            border-radius: 8px; font-size: 0.9rem; font-weight: 600;
+            border: 1px solid #44ff44; opacity: 0; transition: 0.4s;
+            z-index: 9999; white-space: nowrap;
+        }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+        .toast.error { background: #331a1a; color: #ff4444; border-color: #ff4444; }
+
+        /* Rating summary bar */
+        .rating-summary {
+            background: var(--card-bg);
+            border: 1px solid #222;
+            border-radius: 12px;
+            padding: 22px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+        .rating-big { text-align: center; flex-shrink: 0; }
+        .rating-big .num { font-family: 'Syne', sans-serif; font-size: 3rem; font-weight: 800; color: white; line-height: 1; }
+        .rating-big .stars { color: #ffcc00; font-size: 1rem; margin-top: 4px; }
+        .rating-big .total { color: var(--text-gray); font-size: 0.75rem; margin-top: 4px; }
+        .rating-bars { flex: 1; min-width: 160px; }
+        .bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-size: 0.8rem; }
+        .bar-label { color: var(--text-gray); flex-shrink: 0; width: 14px; text-align: right; }
+        .bar-track { flex: 1; height: 6px; background: #2a2a2a; border-radius: 3px; overflow: hidden; }
+        .bar-fill { height: 100%; background: #ffcc00; border-radius: 3px; transition: width 0.6s ease; }
+        .bar-count { color: var(--text-gray); flex-shrink: 0; width: 20px; font-size: 0.75rem; }
+
+        /* Review cards */
+        .testi-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:16px; }
+        .testi-card { background:var(--card-bg); border:1px solid #222; border-radius:12px; padding:22px; transition:0.3s; position:relative; animation:fadeInUp 0.5s ease backwards; }
+        .testi-card:hover{border-color:#333;transform:translateY(-4px);}
+        .testi-quote{font-size:2.5rem;color:var(--primary-red);line-height:1;margin-bottom:8px;font-family:Georgia,serif;}
+        .testi-text{color:var(--text-gray);font-size:0.9rem;line-height:1.6;margin-bottom:16px;}
+        .testi-stars{color:#ffcc00;font-size:0.85rem;margin-bottom:12px;letter-spacing:2px;}
+        .testi-author{display:flex;align-items:center;gap:10px;border-top:1px solid #1e1e1e;padding-top:12px;}
+        .testi-avatar{width:36px;height:36px;border-radius:50%;background:var(--dark-red);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;flex-shrink:0;}
+        .testi-name{font-weight:600;font-size:0.9rem;}
+        .testi-role{font-size:0.75rem;color:var(--text-gray);}
+        .testi-service{position:absolute;top:16px;right:16px;font-size:0.65rem;background:#1a1a1a;color:var(--primary-red);padding:3px 8px;border-radius:4px;border:1px solid #2a2a2a;}
+        .testi-date{font-size:0.7rem;color:#555;margin-top:4px;}
+
+        /* Loading state */
+        .loading-reviews { text-align: center; padding: 40px; color: var(--text-gray); }
+        .spinner { width: 32px; height: 32px; border: 3px solid #333; border-top-color: var(--primary-red); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 12px; }
+        .no-reviews { text-align: center; padding: 40px; color: var(--text-gray); font-size: 0.9rem; }
+
+        /* INFO GRID */
+        .info-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:20px;margin-top:40px;}
+        .schedule-card,.contact-card{background:var(--card-bg);padding:25px;border-radius:12px;border:1px solid #333;transition:0.3s;}
+        .schedule-card:hover,.contact-card:hover{border-color:#444;}
+        .schedule-card h3,.contact-card h3{font-family:'Syne',sans-serif;margin-bottom:15px;}
+        .status-badge{display:inline-block;padding:5px 12px;border-radius:20px;font-size:0.78rem;margin-bottom:15px;font-weight:700;}
+        .status-open{background:#1a331a;color:var(--status-green);animation:glow 3s infinite;}
+        .status-closed{background:#331a1a;color:#ff4444;}
+        table{width:100%;border-collapse:collapse;}
+        table td{padding:10px 0;border-bottom:1px solid #222;font-size:0.9rem;}
+        .day{font-weight:600;color:var(--text-gray);}
+        .hours{text-align:right;color:var(--primary-red);font-weight:700;}
+        .contact-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;font-size:0.9rem;}
+        .contact-item i{color:var(--primary-red);margin-top:3px;flex-shrink:0;}
+        .contact-note{font-size:0.78rem;color:var(--text-gray);margin-top:12px;border-top:1px solid #333;padding-top:12px;}
+
+        /* ===================== ADMIN MODAL ===================== */
+        .modal-overlay {
+            display: none; position: fixed; inset: 0;
+            background: rgba(0,0,0,0.9); z-index: 10000;
+            align-items: center; justify-content: center; padding: 20px;
+        }
+        .modal-overlay.open { display: flex; }
+        .modal-box {
+            background: var(--card-bg); border: 1px solid var(--dark-red);
+            border-radius: 16px; width: 100%; max-width: 520px;
+            max-height: 90vh; overflow-y: auto;
+            animation: fadeInUp 0.3s ease;
+        }
+        .modal-header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 24px; border-bottom: 1px solid #222;
+            position: sticky; top: 0; background: var(--card-bg); z-index: 1;
+        }
+        .modal-header h3 { font-family: 'Syne', sans-serif; color: var(--primary-red); font-size: 1.1rem; }
+        .modal-close { background: none; border: none; color: var(--text-gray); font-size: 1.3rem; cursor: pointer; padding: 4px; transition: 0.2s; }
+        .modal-close:hover { color: white; }
+        .modal-body { padding: 24px; }
+
+        /* Tab admin */
+        .admin-tabs { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+        .admin-tab {
+            padding: 8px 16px; border-radius: 6px; border: 1px solid #333;
+            background: #1a1a1a; color: var(--text-gray); cursor: pointer;
+            font-family: 'DM Sans', sans-serif; font-size: 0.85rem; transition: 0.2s;
+        }
+        .admin-tab.active { background: var(--primary-red); border-color: var(--primary-red); color: white; }
+        .admin-tab-content { display: none; }
+        .admin-tab-content.active { display: block; }
+
+        /* PIN screen */
+        .pin-screen { text-align: center; padding: 10px 0 20px; }
+        .pin-screen p { color: var(--text-gray); font-size: 0.9rem; margin-bottom: 16px; }
+        .pin-screen .lock-icon { font-size: 2.5rem; color: var(--primary-red); margin-bottom: 12px; display: block; }
+        .pin-form { display: flex; gap: 10px; }
+        .pin-form input { flex: 1; }
+
+        /* Katalog admin item */
+        .admin-catalog-item {
+            background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 8px;
+            padding: 14px; margin-bottom: 10px; display: flex;
+            align-items: center; gap: 12px;
+        }
+        .admin-catalog-item img { width: 60px; height: 45px; object-fit: cover; border-radius: 6px; flex-shrink: 0; }
+        .admin-catalog-item-info { flex: 1; min-width: 0; }
+        .admin-catalog-item-info strong { display: block; font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .admin-catalog-item-info span { font-size: 0.78rem; color: var(--text-gray); }
+        .admin-catalog-actions { display: flex; gap: 6px; }
+        .btn-edit { padding: 5px 10px; background: #1a1a2a; border: 1px solid #3a3a5a; color: #7a7aff; border-radius: 4px; cursor: pointer; font-size: 0.75rem; transition: 0.2s; }
+        .btn-edit:hover { background: #2a2a4a; }
+        .btn-del { padding: 5px 10px; background: #2a1a1a; border: 1px solid #5a2a2a; color: #ff6666; border-radius: 4px; cursor: pointer; font-size: 0.75rem; transition: 0.2s; }
+        .btn-del:hover { background: #3a1a1a; }
+
+        /* Porto admin item */
+        .admin-porto-item {
+            background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 8px;
+            overflow: hidden; margin-bottom: 10px;
+        }
+        .admin-porto-item img { width: 100%; height: 120px; object-fit: cover; display: block; }
+        .admin-porto-item-body { padding: 12px; display: flex; justify-content: space-between; align-items: center; }
+        .admin-porto-item-body span { font-size: 0.85rem; font-weight: 600; }
+
+        @media(max-width: 520px) { .modal-box { border-radius: 12px; } .admin-tabs { gap: 6px; } .admin-tab { padding: 7px 12px; font-size: 0.8rem; } }
+        #scrollTop{position:fixed;bottom:24px;right:24px;width:42px;height:42px;background:var(--primary-red);color:white;border:none;border-radius:50%;cursor:pointer;display:none;align-items:center;justify-content:center;font-size:1rem;z-index:999;transition:0.3s;box-shadow:0 4px 15px rgba(255,0,0,0.4);}
+        #scrollTop:hover{background:var(--dark-red);transform:translateY(-3px);}
+
+        /* ===================== TESTIMONI PAGE ===================== */
+        .testi-page-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .testi-full-card {
+            background: var(--card-bg);
+            border: 1px solid #222;
+            border-radius: 14px;
+            overflow: hidden;
+            transition: 0.3s;
+            animation: fadeInUp 0.5s ease backwards;
+        }
+        .testi-full-card:hover { border-color: #333; transform: translateY(-4px); }
+
+        /* Bukti foto */
+        .bukti-img-wrap {
+            width: 100%; height: 200px; overflow: hidden;
+            background: #1a1a1a; position: relative; cursor: pointer;
+        }
+        .bukti-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: 0.4s; display: block; }
+        .bukti-img-wrap:hover img { transform: scale(1.05); }
+        .bukti-overlay {
+            position: absolute; inset: 0;
+            background: rgba(0,0,0,0.5);
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; transition: 0.3s;
+        }
+        .bukti-img-wrap:hover .bukti-overlay { opacity: 1; }
+        .bukti-overlay i { font-size: 2rem; color: white; }
+
+        /* Detail transaksi */
+        .transaksi-info {
+            padding: 16px;
+            border-bottom: 1px solid #1e1e1e;
+            background: #0d0d0d;
+            font-size: 0.8rem;
+        }
+        .transaksi-row { display: flex; justify-content: space-between; margin-bottom: 5px; }
+        .transaksi-label { color: var(--text-gray); }
+        .transaksi-val { font-weight: 600; color: white; }
+        .transaksi-val.lunas { color: var(--status-green); }
+
+        /* Ulasan bagian bawah card */
+        .testi-full-body { padding: 18px; }
+
+        /* Lightbox */
+        .lightbox {
+            display: none; position: fixed; inset: 0;
+            background: rgba(0,0,0,0.95); z-index: 9999;
+            align-items: center; justify-content: center;
+            padding: 20px;
+        }
+        .lightbox.open { display: flex; }
+        .lightbox img { max-width: 100%; max-height: 90vh; border-radius: 8px; object-fit: contain; }
+        .lightbox-close {
+            position: fixed; top: 20px; right: 20px;
+            width: 40px; height: 40px; background: var(--primary-red);
+            border: none; border-radius: 50%; color: white; font-size: 1.2rem;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+        }
+
+        /* Admin panel */
+        .admin-toggle {
+            display: flex; align-items: center; gap: 8px;
+            background: #1a1a1a; border: 1px solid #333;
+            color: var(--text-gray); padding: 8px 16px;
+            border-radius: 6px; cursor: pointer; font-size: 0.85rem;
+            font-family: 'DM Sans', sans-serif; transition: 0.3s; margin-bottom: 20px;
+        }
+        .admin-toggle:hover { border-color: var(--primary-red); color: white; }
+        .admin-panel {
+            background: var(--card-bg); border: 1px solid var(--dark-red);
+            border-radius: 12px; padding: 24px; margin-bottom: 30px;
+            display: none; animation: fadeIn 0.3s ease;
+        }
+        .admin-panel.open { display: block; }
+        .admin-panel h3 { font-family: 'Syne', sans-serif; margin-bottom: 6px; font-size: 1rem; color: var(--primary-red); }
+        .admin-panel p { color: var(--text-gray); font-size: 0.82rem; margin-bottom: 18px; }
+        .admin-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+        .img-upload-label {
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%; padding: 11px; border: 1px dashed #444; border-radius: 6px;
+            color: var(--text-gray); cursor: pointer; transition: 0.3s; font-size: 0.9rem;
+            background: #1a1a1a; margin-bottom: 10px;
+        }
+        .img-upload-label:hover { border-color: var(--primary-red); color: white; }
+        #img-preview { width: 100%; border-radius: 6px; margin-bottom: 10px; display: none; max-height: 180px; object-fit: cover; }
+        .pin-row { display: flex; gap: 10px; align-items: center; margin-bottom: 14px; }
+        .pin-row input { flex: 1; }
+        .pin-hint { font-size: 0.75rem; color: #555; }
+
+        @media(max-width: 768px) {
+            .testi-page-grid { grid-template-columns: 1fr; }
+            .admin-form-grid { grid-template-columns: 1fr; }
+        }
+        #scrollTop.visible{display:flex;}
+
+        footer{text-align:center;padding:40px 5%;background:#000;color:#555;font-size:0.85rem;}
+        .fade-view{animation:fadeIn 0.5s ease-in-out;}
+
+        /* RESPONSIVE */
+        @media(max-width:900px){.info-grid{grid-template-columns:1fr;}.form-row{grid-template-columns:1fr;}}
+        @media(max-width:768px){
+            .nav-links{display:none;}.hamburger{display:flex;}
+            .hero{padding:60px 5% 50px;}.hero .tagline br{display:none;}
+            .grid{grid-template-columns:1fr 1fr;gap:14px;}
+            .controls{flex-direction:column;}.search-bar{min-width:unset;width:100%;}
+            .filter-wrap{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:8px;padding-bottom:4px;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+            .filter-wrap::-webkit-scrollbar{display:none;}.filter-btn{flex-shrink:0;}
+            .porto-grid{grid-template-columns:1fr 1fr;}
+            .testi-grid{grid-template-columns:1fr;}
+            .info-grid{grid-template-columns:1fr;gap:16px;margin-top:30px;}
+            .schedule-card,.contact-card{padding:20px;}
+            .rating-summary{flex-direction:column;gap:16px;}
+        }
+        @media(max-width:420px){
+            .grid{grid-template-columns:1fr;}.porto-grid{grid-template-columns:1fr;}
+            .product-img-wrap{height:160px;}
+            .hero-btns{flex-direction:column;align-items:center;}
+            .btn-primary,.btn-outline{width:100%;max-width:280px;text-align:center;}
+        }
+    </style>
+</head>
+<body onload="updateStatus()">
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- NAV -->
+<nav>
+    <div class="logo" id="logo-btn" ondblclick="openAdminModal()" onclick="showHome()" title="Double tap untuk admin">RAFEL STUDIO</div>
+    <div class="nav-links">
+        <a href="javascript:void(0)" onclick="showCatalog()"><i class="fas fa-th-large"></i> Katalog</a>
+        <a href="javascript:void(0)" onclick="showTestimoni()"><i class="fas fa-star"></i> Testimoni</a>
+        <a href="https://pratamamoriski-cyber.github.io/Fell/" target="_blank"><i class="fas fa-briefcase"></i> Portofolio</a>
+        <a href="https://wa.me/6283116098203" target="_blank" style="background:#25d366;padding:7px 14px;border-radius:6px;font-weight:600;">
+            <i class="fab fa-whatsapp"></i> WhatsApp
+        </a>
+    </div>
+    <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+    </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+    <a href="javascript:void(0)" onclick="showCatalog();closeMenu()"><i class="fas fa-th-large"></i> Lihat Katalog</a>
+    <a href="javascript:void(0)" onclick="showTestimoni();closeMenu()"><i class="fas fa-star"></i> Testimoni & Bukti</a>
+    <a href="https://pratamamoriski-cyber.github.io/Fell/" target="_blank"><i class="fas fa-briefcase"></i> Portofolio</a>
+    <a href="https://wa.me/6283116098203" target="_blank"><i class="fab fa-whatsapp"></i> Chat WhatsApp</a>
+    <a href="mailto:ficrynurul@gmail.com"><i class="fas fa-envelope"></i> Email Kami</a>
+</div>
+
+<!-- HOME -->
+<div id="home-view" class="fade-view">
+    <section class="hero">
+        <p class="subtitle">Creative Solution</p>
+        <h1>rafel studio</h1>
+        <p class="tagline">Website cepat jadi, desain menarik, langsung siap jualan.<br><strong>Pesan sekarang juga!</strong></p>
+        <div class="hero-btns">
+            <a href="javascript:void(0)" onclick="showCatalog()" class="btn-primary"><i class="fas fa-th-large"></i> Lihat Katalog</a>
+            <a href="https://wa.me/6283116098203" class="btn-outline" target="_blank"><i class="fab fa-whatsapp"></i> Hubungi Kami</a>
+        </div>
+    </section>
+
+    <div class="container">
+
+        <!-- Produk Unggulan -->
+        <div class="section-header">
+            <h2>PRODUK UNGGULAN</h2>
+            <a href="javascript:void(0)" onclick="showCatalog()" style="color:var(--primary-red);text-decoration:none;font-weight:700;font-size:0.85rem;white-space:nowrap;">LIHAT SEMUA ›</a>
+        </div>
+        <div class="grid">
+            <div class="product-card">
+                <div class="product-img-wrap"><img src="https://images.unsplash.com/photo-1547658719-da2b51169166?auto=format&fit=crop&w=500" class="product-img" alt="Website Design"></div>
+                <div class="product-info">
+                    <span class="product-category">Web Development</span>
+                    <h3 class="product-title">Landing Page Premium <span class="badge badge-hot">🔥 Terlaris</span></h3>
+                    <p class="price">Mulai Rp 50.000</p>
+                    <a href="https://wa.me/6283116098203?text=Bang%20Rafel,%20aku%20mau%20pesan%20Website%20Landing%20Page" class="buy-btn"><i class="fab fa-whatsapp"></i> Order Sekarang</a>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-img-wrap"><img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=500" class="product-img" alt="Logo Design"></div>
+                <div class="product-info">
+                    <span class="product-category">Graphic Design</span>
+                    <h3 class="product-title">Logo Art Professional <span class="badge badge-new">✨ Baru</span></h3>
+                    <p class="price">Mulai Rp 20.000</p>
+                    <a href="https://wa.me/6283116098203?text=Bang%20Rafel,%20aku%20mau%20pesan%20Desain%20Logo" class="buy-btn"><i class="fab fa-whatsapp"></i> Order Sekarang</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Portofolio -->
+        <div class="porto-section">
+            <div class="section-header">
+                <h2>PORTOFOLIO TERBARU</h2>
+                <a href="https://pratamamoriski-cyber.github.io/portofolio-/" target="_blank" style="color:var(--primary-red);text-decoration:none;font-weight:700;font-size:0.85rem;white-space:nowrap;">LIHAT SEMUA ›</a>
+            </div>
+            <div class="porto-grid">
+                <div class="porto-card">
+                    <img src="https://i.imgur.com/aujVMe6.png" alt="Editing / Desain Logo">
+                    <div class="porto-overlay">
+                        <span class="porto-label">Editing / Desain</span>
+                        <span class="porto-title">Editing / Desain Logo</span>
+                        <a href="https://pratamamoriski-cyber.github.io/portofolio-/" target="_blank" class="porto-cta">Lihat Detail →</a>
+                    </div>
+                </div>
+                <div class="porto-card">
+                    <img src="https://i.imgur.com/1PAw88K.png" alt="Website Custom">
+                    <div class="porto-overlay">
+                        <span class="porto-label">Web Development</span>
+                        <span class="porto-title">Website Custom</span>
+                        <a href="https://pratamamoriski-cyber.github.io/portofolio-/" target="_blank" class="porto-cta">Lihat Detail →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RATING & ULASAN -->
+        <div class="rating-section">
+            <div class="section-header">
+                <h2>ULASAN KLIEN</h2>
+                <span id="avg-badge" style="color:var(--text-gray);font-size:0.85rem;">Memuat...</span>
+            </div>
+
+            <!-- Summary Bar -->
+            <div class="rating-summary" id="rating-summary" style="display:none;">
+                <div class="rating-big">
+                    <div class="num" id="avg-score">0</div>
+                    <div class="stars" id="avg-stars">☆☆☆☆☆</div>
+                    <div class="total" id="total-reviews">0 ulasan</div>
+                </div>
+                <div class="rating-bars" id="bar-chart"></div>
+            </div>
+
+            <!-- Form Ulasan -->
+            <div class="rating-form-card">
+                <h3><i class="fas fa-pen" style="color:var(--primary-red);margin-right:8px;"></i>Kasih Ulasan</h3>
+                <p>Pernah order di Rafel Studio? Bagikan pengalamanmu!</p>
+
+                <div class="form-row">
+                    <input type="text" class="form-input" id="input-name" placeholder="Nama kamu *" maxlength="50">
+                    <input type="text" class="form-input" id="input-role" placeholder="Pekerjaan / Deskripsi">
+                </div>
+
+                <select class="service-select" id="input-service">
+                    <option value="">Pilih jasa yang dipesan *</option>
+                    <option value="Landing Page">Landing Page</option>
+                    <option value="Logo Design">Logo Design</option>
+                    <option value="Video Edit">Video Edit</option>
+                    <option value="E-Commerce">Website E-Commerce</option>
+                    <option value="Rekber">Jasa Rekber</option>
+                </select>
+
+                <div style="margin-bottom:12px;">
+                    <p style="font-size:0.85rem;color:var(--text-gray);margin-bottom:8px;">Beri bintang *</p>
+                    <div class="star-selector" id="star-selector">
+                        <input type="radio" name="rating" id="s5" value="5"><label for="s5">★</label>
+                        <input type="radio" name="rating" id="s4" value="4"><label for="s4">★</label>
+                        <input type="radio" name="rating" id="s3" value="3"><label for="s3">★</label>
+                        <input type="radio" name="rating" id="s2" value="2"><label for="s2">★</label>
+                        <input type="radio" name="rating" id="s1" value="1"><label for="s1">★</label>
+                    </div>
+                </div>
+
+                <textarea class="form-input" id="input-review" placeholder="Ceritain pengalamanmu... *" maxlength="300"></textarea>
+
+                <button class="submit-btn" id="submit-btn" onclick="submitReview()">
+                    <i class="fas fa-paper-plane"></i> Kirim Ulasan
+                </button>
+            </div>
+
+            <!-- List Ulasan -->
+            <div id="reviews-container">
+                <div class="loading-reviews">
+                    <div class="spinner"></div>
+                    <p>Memuat ulasan...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info -->
+        <div class="info-grid">
+            <div class="schedule-card">
+                <div id="status-label" class="status-badge">● Menghitung Status...</div>
+                <h3>Jadwal Operasional</h3>
+                <table>
+                    <tr><td class="day">Senin – Jumat</td><td class="hours">18.00 – 22.00 WIB</td></tr>
+                    <tr><td class="day">Sabtu – Minggu</td><td class="hours">06.00 – 22.00 WIB</td></tr>
+                </table>
+            </div>
+            <div class="contact-card">
+                <h3>Informasi Kontak</h3>
+                <div class="contact-item"><i class="fas fa-map-marker-alt"></i><span>Cikalong Wetan, Bandung Barat, Jawa Barat</span></div>
+                <div class="contact-item"><i class="fas fa-envelope"></i><span>ficrynurul@gmail.com</span></div>
+                <div class="contact-item"><i class="fab fa-whatsapp"></i><a href="https://wa.me/6283116098203" style="color:#25d366;text-decoration:none;">+62 831-1609-8203</a></div>
+                <p class="contact-note">Dekat Lapangan Sepakbola Maswati & Masjid Jamie Al Jihad.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- TESTIMONI PAGE -->
+<div id="testimoni-view" class="container fade-view" style="display:none;">
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <button class="lightbox-close" onclick="closeLightbox()"><i class="fas fa-times"></i></button>
+        <img id="lightbox-img" src="" alt="Bukti Transaksi">
+    </div>
+
+    <div class="section-header">
+        <h2>TESTIMONI & BUKTI TRANSAKSI</h2>
+        <a href="javascript:void(0)" onclick="showHome()" style="color:var(--text-gray);text-decoration:none;font-weight:700;font-size:0.85rem;white-space:nowrap;"><i class="fas fa-arrow-left"></i> KEMBALI</a>
+    </div>
+
+    <!-- List Testimoni dulu di atas -->
+    <div id="ts-reviews-container">
+        <div class="loading-reviews">
+            <div class="spinner"></div>
+            <p>Memuat testimoni...</p>
+        </div>
+    </div>
+
+    <!-- Rating Summary di bawah -->
+    <div class="rating-summary" id="ts-rating-summary" style="display:none;margin-top:30px;">
+        <div class="rating-big">
+            <div class="num" id="ts-avg-score">0</div>
+            <div class="stars" id="ts-avg-stars">☆☆☆☆☆</div>
+            <div class="total" id="ts-total-reviews">0 ulasan</div>
+        </div>
+        <div class="rating-bars" id="ts-bar-chart"></div>
+    </div>
+</div>
+
+<!-- CATALOG -->
+<div id="catalog-view" class="container fade-view" style="display:none;">
+    <div class="section-header">
+        <h2>FULL KATALOG LAYANAN</h2>
+        <a href="javascript:void(0)" onclick="showHome()" style="color:var(--text-gray);text-decoration:none;font-weight:700;font-size:0.85rem;white-space:nowrap;"><i class="fas fa-arrow-left"></i> KEMBALI</a>
+    </div>
+    <div class="controls">
+        <input type="text" class="search-bar" placeholder="Cari jasa yang kamu butuhkan..." oninput="filterProducts()">
+        <div class="filter-wrap">
+            <button class="filter-btn active" onclick="filterCategory('all',this)">Semua</button>
+            <button class="filter-btn" onclick="filterCategory('development',this)">Website</button>
+            <button class="filter-btn" onclick="filterCategory('graphic',this)">Desain</button>
+            <button class="filter-btn" onclick="filterCategory('editor',this)">Editing</button>
+        </div>
+    </div>
+    <div class="grid" id="full-catalog">
+        <div class="product-card item" data-cat="development">
+            <div class="product-img-wrap"><img src="https://images.unsplash.com/photo-1547658719-da2b51169166?auto=format&fit=crop&w=500" class="product-img"></div>
+            <div class="product-info">
+                <span class="product-category">Web Development</span>
+                <h3 class="product-title">Website Landing Page <span class="badge badge-hot">🔥 Terlaris</span></h3>
+                <p class="price">Rp 50.000</p>
+                <a href="https://wa.me/6283116098203?text=Halo%20Rafel,%20mau%20order%20Landing%20Page" class="buy-btn"><i class="fab fa-whatsapp"></i> Pilih Jasa</a>
+            </div>
+        </div>
+        <div class="product-card item" data-cat="graphic">
+            <div class="product-img-wrap"><img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=500" class="product-img"></div>
+            <div class="product-info">
+                <span class="product-category">Graphic Design</span>
+                <h3 class="product-title">Logo Art Design <span class="badge badge-new">✨ Baru</span></h3>
+                <p class="price">Rp 20.000</p>
+                <a href="https://wa.me/6283116098203?text=Halo%20Rafel,%20mau%20order%20Desain%20Logo" class="buy-btn"><i class="fab fa-whatsapp"></i> Pilih Jasa</a>
+            </div>
+        </div>
+        <div class="product-card item" data-cat="editor">
+            <div class="product-img-wrap"><img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=500" class="product-img"></div>
+            <div class="product-info">
+                <span class="product-category">Video Editor</span>
+                <h3 class="product-title">Cinematic Video Edit</h3>
+                <p class="price">Rp 50.000</p>
+                <a href="https://wa.me/6283116098203?text=Halo%20Rafel,%20mau%20order%20Edit%20Video" class="buy-btn"><i class="fab fa-whatsapp"></i> Pilih Jasa</a>
+            </div>
+        </div>
+        <div class="product-card item" data-cat="development">
+            <div class="product-img-wrap"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=500" class="product-img"></div>
+            <div class="product-info">
+                <span class="product-category">Web Development</span>
+                <h3 class="product-title">Website E-Commerce</h3>
+                <p class="price">Rp 150.000</p>
+                <a href="https://wa.me/6283116098203?text=Halo%20Rafel,%20mau%20order%20Toko%20Online" class="buy-btn"><i class="fab fa-whatsapp"></i> Pilih Jasa</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ADMIN MODAL -->
+<div class="modal-overlay" id="admin-modal">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h3><i class="fas fa-shield-alt"></i> Panel Admin</h3>
+            <button class="modal-close" onclick="closeAdminModal()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+
+            <!-- PIN Screen -->
+            <div id="pin-screen">
+                <div class="pin-screen">
+                    <i class="fas fa-lock lock-icon"></i>
+                    <p>Masukkan PIN untuk masuk ke panel admin</p>
+                    <div class="pin-form">
+                        <input type="password" class="form-input" id="modal-pin" placeholder="PIN Admin" onkeyup="if(event.key==='Enter')verifyPin()">
+                        <button class="submit-btn" style="width:auto;padding:11px 20px;" onclick="verifyPin()">Masuk</button>
+                    </div>
+                    <p id="pin-error" style="display:none;color:#ff4444;font-size:0.8rem;margin-top:10px;text-align:center;"></p>
+                </div>
+            </div>
+
+            <!-- Secret Screen (step 2) -->
+            <div id="secret-screen" style="display:none;">
+                <div class="pin-screen">
+                    <i class="fas fa-user-shield lock-icon"></i>
+                    <p>Masukkan nama verifikasi kamu</p>
+                    <div class="pin-form">
+                        <input type="password" class="form-input" id="modal-secret" placeholder="Nama verifikasi" onkeyup="if(event.key==='Enter')verifySecret()">
+                        <button class="submit-btn" style="width:auto;padding:11px 20px;" onclick="verifySecret()">Verifikasi</button>
+                    </div>
+                    <p id="secret-error" style="display:none;color:#ff4444;font-size:0.8rem;margin-top:10px;text-align:center;"></p>
+                </div>
+            </div>
+
+            <!-- Admin Content (hidden until PIN verified) -->
+            <div id="admin-content" style="display:none;">
+                <div class="admin-tabs">
+                    <button class="admin-tab active" onclick="switchTab('tab-testimoni',this)"><i class="fas fa-star"></i> Testimoni</button>
+                    <button class="admin-tab" onclick="switchTab('tab-katalog',this)"><i class="fas fa-th-large"></i> Katalog</button>
+                    <button class="admin-tab" onclick="switchTab('tab-porto',this)"><i class="fas fa-images"></i> Portofolio</button>
+                </div>
+
+                <!-- TAB TESTIMONI -->
+                <div class="admin-tab-content active" id="tab-testimoni">
+                    <p style="color:var(--text-gray);font-size:0.82rem;margin-bottom:16px;">Upload bukti transaksi + ulasan klien.</p>
+                    <div class="admin-form-grid">
+                        <input type="text" class="form-input" id="admin-name" placeholder="Nama customer *">
+                        <input type="text" class="form-input" id="admin-role" placeholder="Pekerjaan / deskripsi">
+                    </div>
+                    <div class="admin-form-grid" style="margin-top:10px;">
+                        <select class="service-select" id="admin-service" style="margin-bottom:0;">
+                            <option value="">Jasa yang dipesan *</option>
+                            <option value="Landing Page">Landing Page</option>
+                            <option value="Logo Design">Logo Design</option>
+                            <option value="Video Edit">Video Edit</option>
+                            <option value="E-Commerce">Website E-Commerce</option>
+                            <option value="Rekber">Jasa Rekber</option>
+                        </select>
+                        <input type="text" class="form-input" id="admin-total" placeholder="Total bayar (Rp 20.000)">
+                    </div>
+                    <div class="admin-form-grid" style="margin-top:10px;">
+                        <input type="text" class="form-input" id="admin-metode" placeholder="Metode (DANA/OVO/dll)">
+                        <input type="text" class="form-input" id="admin-tanggal" placeholder="Tanggal (8 Mei 2026)">
+                    </div>
+                    <textarea class="form-input" id="admin-review" placeholder="Ulasan klien (opsional)" style="margin-top:10px;min-height:70px;"></textarea>
+                    <label class="img-upload-label" for="bukti-upload" style="margin-top:10px;">
+                        <i class="fas fa-image"></i> Upload foto bukti transaksi
+                    </label>
+                    <input type="file" id="bukti-upload" accept="image/*" style="display:none;" onchange="previewBukti(this)">
+                    <img id="img-preview" src="" alt="Preview" style="display:none;width:100%;border-radius:6px;margin-bottom:10px;max-height:180px;object-fit:cover;">
+                    <button class="submit-btn" id="admin-submit-btn" onclick="submitAdmin()">
+                        <i class="fas fa-upload"></i> Upload Testimoni
+                    </button>
+                </div>
+
+                <!-- TAB KATALOG -->
+                <div class="admin-tab-content" id="tab-katalog">
+                    <p style="color:var(--text-gray);font-size:0.82rem;margin-bottom:16px;">Tambah atau hapus item katalog.</p>
+                    <div id="admin-catalog-list"></div>
+                    <hr style="border-color:#222;margin:16px 0;">
+                    <p style="font-weight:600;margin-bottom:12px;font-size:0.9rem;">+ Tambah Katalog Baru</p>
+                    <input type="text" class="form-input" id="kat-title" placeholder="Nama jasa *" style="margin-bottom:10px;">
+                    <div class="admin-form-grid">
+                        <input type="text" class="form-input" id="kat-price" placeholder="Harga (Rp 50.000)">
+                        <select class="service-select" id="kat-cat" style="margin-bottom:0;">
+                            <option value="development">Website</option>
+                            <option value="graphic">Desain</option>
+                            <option value="editor">Editing</option>
+                            <option value="jasa">admin rekber</option>
+                        </select>
+                    </div>
+                    <input type="text" class="form-input" id="kat-img" placeholder="URL foto (dari imgbb/unsplash)" style="margin-top:10px;margin-bottom:10px;">
+                    <input type="text" class="form-input" id="kat-wa" placeholder="Teks WA order (opsional)" style="margin-bottom:10px;">
+                    <button class="submit-btn" onclick="addKatalog()"><i class="fas fa-plus"></i> Tambah ke Katalog</button>
+                </div>
+
+                <!-- TAB PORTOFOLIO -->
+                <div class="admin-tab-content" id="tab-porto">
+                    <p style="color:var(--text-gray);font-size:0.82rem;margin-bottom:16px;">Edit atau tambah item portofolio.</p>
+                    <div id="admin-porto-list"></div>
+                    <hr style="border-color:#222;margin:16px 0;">
+                    <p style="font-weight:600;margin-bottom:12px;font-size:0.9rem;">+ Tambah Portofolio Baru</p>
+                    <input type="text" class="form-input" id="porto-title" placeholder="Judul proyek *" style="margin-bottom:10px;">
+                    <div class="admin-form-grid">
+                        <input type="text" class="form-input" id="porto-label" placeholder="Kategori (Web Dev, dll)">
+                        <input type="text" class="form-input" id="porto-link" placeholder="Link detail (opsional)">
+                    </div>
+                    <input type="text" class="form-input" id="porto-img" placeholder="URL foto portofolio *" style="margin-top:10px;margin-bottom:10px;">
+                    <button class="submit-btn" onclick="addPorto()"><i class="fas fa-plus"></i> Tambah Portofolio</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fas fa-arrow-up"></i></button>
+<footer><p>RAFEL STUDIO © 2026 | Solusi Murah & Berkualitas</p></footer>
+
+<!-- FIREBASE -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
+    import { getFirestore, collection, addDoc, getDocs, orderBy, query, serverTimestamp }
+        from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyCNldCLnMvAbR4Nwl1fEU0AByKrQnFj6PY",
+        authDomain: "web1-8a0e0.firebaseapp.com",
+        projectId: "web1-8a0e0",
+        storageBucket: "web1-8a0e0.firebasestorage.app",
+        messagingSenderId: "13771721749",
+        appId: "1:13771721749:web:e9efbc51d637a644ff921c",
+        measurementId: "G-9QPG78WRDJ"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // ---- Load Reviews ----
+    async function loadReviews() {
+        try {
+            const q = query(collection(db, "reviews"), orderBy("timestamp", "desc"));
+            const snap = await getDocs(q);
+            const reviews = [];
+            snap.forEach(doc => reviews.push({ id: doc.id, ...doc.data() }));
+            renderReviews(reviews);
+            renderSummary(reviews);
+        } catch (e) {
+            document.getElementById('reviews-container').innerHTML =
+                `<div class="no-reviews"><i class="fas fa-exclamation-circle" style="color:var(--primary-red);font-size:1.5rem;margin-bottom:8px;display:block;"></i>Gagal memuat ulasan.</div>`;
+        }
+    }
+
+    function renderSummary(reviews) {
+        if (reviews.length === 0) {
+            document.getElementById('avg-badge').innerText = 'Belum ada ulasan';
+            return;
+        }
+        const total = reviews.length;
+        const avg = reviews.reduce((s, r) => s + r.rating, 0) / total;
+        const rounded = Math.round(avg * 10) / 10;
+
+        document.getElementById('avg-score').innerText = rounded.toFixed(1);
+        document.getElementById('avg-stars').innerText = '★'.repeat(Math.round(avg)) + '☆'.repeat(5 - Math.round(avg));
+        document.getElementById('total-reviews').innerText = total + ' ulasan';
+        document.getElementById('avg-badge').innerText = '⭐ ' + rounded.toFixed(1) + '/5 dari ' + total + ' klien';
+        document.getElementById('rating-summary').style.display = 'flex';
+
+        // Bar chart
+        let bars = '';
+        for (let i = 5; i >= 1; i--) {
+            const count = reviews.filter(r => r.rating === i).length;
+            const pct = total > 0 ? (count / total * 100) : 0;
+            bars += `<div class="bar-row">
+                <span class="bar-label">${i}</span>
+                <div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div>
+                <span class="bar-count">${count}</span>
+            </div>`;
+        }
+        document.getElementById('bar-chart').innerHTML = bars;
+    }
+
+    function renderReviews(reviews) {
+        const container = document.getElementById('reviews-container');
+        if (reviews.length === 0) {
+            container.innerHTML = `<div class="no-reviews"><i class="fas fa-comment-slash" style="font-size:2rem;margin-bottom:10px;display:block;"></i>Belum ada ulasan. Jadilah yang pertama!</div>`;
+            return;
+        }
+        const cards = reviews.map(r => {
+            const initials = r.name.split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase();
+            const stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
+            const date = r.timestamp?.toDate ? r.timestamp.toDate().toLocaleDateString('id-ID', { day:'numeric', month:'short', year:'numeric' }) : '';
+            return `<div class="testi-card">
+                <span class="testi-service">${r.service || '-'}</span>
+                <div class="testi-quote">"</div>
+                <p class="testi-text">${r.review}</p>
+                <div class="testi-stars">${stars}</div>
+                <div class="testi-author">
+                    <div class="testi-avatar">${initials}</div>
+                    <div>
+                        <div class="testi-name">${r.name}</div>
+                        <div class="testi-role">${r.role || 'Klien Rafel Studio'}</div>
+                        <div class="testi-date">${date}</div>
+                    </div>
+                </div>
+            </div>`;
+        }).join('');
+        container.innerHTML = `<div class="testi-grid">${cards}</div>`;
+    }
+
+    // ---- Submit Review ----
+    window.submitReview = async function() {
+        const name = document.getElementById('input-name').value.trim();
+        const role = document.getElementById('input-role').value.trim();
+        const service = document.getElementById('input-service').value;
+        const review = document.getElementById('input-review').value.trim();
+        const ratingEl = document.querySelector('input[name="rating"]:checked');
+
+        if (!name) return showToast('Nama wajib diisi!', true);
+        if (!service) return showToast('Pilih jasa yang dipesan dulu!', true);
+        if (!ratingEl) return showToast('Pilih bintang dulu!', true);
+        if (!review) return showToast('Tulis ulasannya dulu!', true);
+
+        const btn = document.getElementById('submit-btn');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengirim...';
+
+        try {
+            await addDoc(collection(db, "reviews"), {
+                name, role, service,
+                rating: parseInt(ratingEl.value),
+                review,
+                timestamp: serverTimestamp()
+            });
+
+            // Reset form
+            document.getElementById('input-name').value = '';
+            document.getElementById('input-role').value = '';
+            document.getElementById('input-service').value = '';
+            document.getElementById('input-review').value = '';
+            document.querySelectorAll('input[name="rating"]').forEach(r => r.checked = false);
+
+            showToast('✅ Ulasan berhasil dikirim! Makasih ya 🙏');
+            loadReviews();
+        } catch (e) {
+            showToast('Gagal kirim ulasan, coba lagi.', true);
+        }
+
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-paper-plane"></i> Kirim Ulasan';
+    };
+
+    function showToast(msg, isError = false) {
+        const t = document.getElementById('toast');
+        t.innerText = msg;
+        t.className = 'toast' + (isError ? ' error' : '');
+        t.classList.add('show');
+        setTimeout(() => t.classList.remove('show'), 3500);
+    }
+
+    // ---- Testimoni Page ----
+    window.loadTestimoniPage = async function() {
+        try {
+            const q = query(collection(db, "reviews"), orderBy("timestamp", "desc"));
+            const snap = await getDocs(q);
+            const reviews = [];
+            snap.forEach(doc => reviews.push({ id: doc.id, ...doc.data() }));
+            renderTestimoniPage(reviews);
+            renderTsSummary(reviews);
+        } catch(e) {
+            document.getElementById('ts-reviews-container').innerHTML =
+                `<div class="no-reviews"><i class="fas fa-exclamation-circle" style="color:var(--primary-red);font-size:1.5rem;display:block;margin-bottom:8px;"></i>Gagal memuat.</div>`;
+        }
+    }
+
+    function renderTsSummary(reviews) {
+        if (reviews.length === 0) return;
+        const total = reviews.length;
+        const avg = reviews.reduce((s,r) => s + r.rating, 0) / total;
+        document.getElementById('ts-avg-score').innerText = (Math.round(avg*10)/10).toFixed(1);
+        document.getElementById('ts-avg-stars').innerText = '★'.repeat(Math.round(avg)) + '☆'.repeat(5-Math.round(avg));
+        document.getElementById('ts-total-reviews').innerText = total + ' ulasan';
+        document.getElementById('ts-rating-summary').style.display = 'flex';
+        let bars = '';
+        for(let i=5;i>=1;i--){
+            const count = reviews.filter(r=>r.rating===i).length;
+            const pct = (count/total*100);
+            bars += `<div class="bar-row"><span class="bar-label">${i}</span><div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div><span class="bar-count">${count}</span></div>`;
+        }
+        document.getElementById('ts-bar-chart').innerHTML = bars;
+    }
+
+    function renderTestimoniPage(reviews) {
+        const container = document.getElementById('ts-reviews-container');
+        if (reviews.length === 0) {
+            container.innerHTML = `<div class="no-reviews"><i class="fas fa-comment-slash" style="font-size:2rem;display:block;margin-bottom:10px;"></i>Belum ada testimoni.</div>`;
+            return;
+        }
+        const cards = reviews.map(r => {
+            const initials = r.name.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();
+            const stars = '★'.repeat(r.rating)+'☆'.repeat(5-r.rating);
+            const date = r.timestamp?.toDate ? r.timestamp.toDate().toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'}) : '';
+            const buktiHtml = r.buktiUrl ? `
+                <div class="bukti-img-wrap" onclick="openLightbox('${r.buktiUrl}')">
+                    <img src="${r.buktiUrl}" alt="Bukti Transaksi" loading="lazy">
+                    <div class="bukti-overlay"><i class="fas fa-search-plus"></i></div>
+                </div>` : '';
+            const transaksiHtml = (r.total || r.metode || r.tanggal) ? `
+                <div class="transaksi-info">
+                    ${r.tanggal ? `<div class="transaksi-row"><span class="transaksi-label">Tanggal</span><span class="transaksi-val">${r.tanggal}</span></div>` : ''}
+                    ${r.service ? `<div class="transaksi-row"><span class="transaksi-label">Jasa</span><span class="transaksi-val">${r.service}</span></div>` : ''}
+                    ${r.total ? `<div class="transaksi-row"><span class="transaksi-label">Total</span><span class="transaksi-val">${r.total}</span></div>` : ''}
+                    ${r.metode ? `<div class="transaksi-row"><span class="transaksi-label">Pembayaran</span><span class="transaksi-val">${r.metode}</span></div>` : ''}
+                    <div class="transaksi-row"><span class="transaksi-label">Status</span><span class="transaksi-val lunas">✅ LUNAS</span></div>
+                </div>` : '';
+            return `<div class="testi-full-card">
+                ${buktiHtml}
+                ${transaksiHtml}
+                <div class="testi-full-body">
+                    <span class="testi-service" style="position:static;display:inline-block;margin-bottom:10px;">${r.service||'-'}</span>
+                    <div class="testi-quote">"</div>
+                    <p class="testi-text">${r.review || 'Klien puas dengan hasilnya!'}</p>
+                    <div class="testi-stars">${stars}</div>
+                    <div class="testi-author">
+                        <div class="testi-avatar">${initials}</div>
+                        <div>
+                            <div class="testi-name">${r.name}</div>
+                            <div class="testi-role">${r.role||'Klien Rafel Studio'}</div>
+                            <div class="testi-date">${date}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+        }).join('');
+        container.innerHTML = `<div class="testi-page-grid">${cards}</div>`;
+    }
+
+    // Admin submit
+    window.submitAdmin = async function() {
+        const name = document.getElementById('admin-name').value.trim();
+        const role = document.getElementById('admin-role').value.trim();
+        const service = document.getElementById('admin-service').value;
+        const total = document.getElementById('admin-total').value.trim();
+        const metode = document.getElementById('admin-metode').value.trim();
+        const tanggal = document.getElementById('admin-tanggal').value.trim();
+        const review = document.getElementById('admin-review').value.trim();
+
+        if (!name || !service) return showToast('Nama & jasa wajib diisi!', true);
+
+        const btn = document.getElementById('admin-submit-btn');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengupload...';
+
+        // Handle gambar — convert ke base64 lalu simpan di Firestore
+        let buktiUrl = '';
+        const fileInput = document.getElementById('bukti-upload');
+        if (fileInput.files[0]) {
+            buktiUrl = await new Promise((res) => {
+                const reader = new FileReader();
+                reader.onload = e => res(e.target.result);
+                reader.readAsDataURL(fileInput.files[0]);
+            });
+        }
+
+        try {
+            await addDoc(collection(db, "reviews"), {
+                name, role, service, total, metode, tanggal,
+                review: review || 'Klien puas dengan hasilnya!',
+                rating: 5,
+                buktiUrl,
+                timestamp: serverTimestamp(),
+                isAdmin: true
+            });
+            showToast('✅ Testimoni berhasil diupload!');
+            // Reset form
+            ['admin-name','admin-role','admin-total','admin-metode','admin-tanggal','admin-review','admin-pin'].forEach(id => document.getElementById(id).value='');
+            document.getElementById('admin-service').value='';
+            document.getElementById('img-preview').style.display='none';
+            fileInput.value='';
+            loadTestimoniPage();
+            loadReviews();
+        } catch(e) {
+            showToast('Gagal upload, coba lagi.', true);
+        }
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-upload"></i> Upload Testimoni';
+    };
+
+    window.previewBukti = function(input) {
+        if (input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = e => {
+                const img = document.getElementById('img-preview');
+                img.src = e.target.result;
+                img.style.display = 'block';
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    };
+
+    window.openLightbox = function(url) {
+        document.getElementById('lightbox-img').src = url;
+        document.getElementById('lightbox').classList.add('open');
+    };
+    window.closeLightbox = function() {
+        document.getElementById('lightbox').classList.remove('open');
+    };
+    async function seedIfEmpty() {
+        const snap = await getDocs(collection(db, "reviews"));
+        if (snap.empty) {
+            await addDoc(collection(db, "reviews"), {
+                name: "hyeraa",
+                role: "Client — JJ Edit Alight Motion",
+                service: "Video Edit",
+                rating: 5,
+                review: "Edit videonya keren banget, smooth transition sama color grading-nya dapet banget. Hasilnya 1080p Full HD, puas sama hasilnya!",
+                timestamp: serverTimestamp()
+            });
+        }
+    }
+
+    seedIfEmpty().then(() => loadReviews());
+</script>
+
+<script>
+    function updateStatus() {
+        const now = new Date(), day = now.getDay(), hour = now.getHours();
+        const el = document.getElementById('status-label');
+        const isOpen = (day >= 1 && day <= 5) ? (hour >= 18 && hour < 22) : (hour >= 6 && hour < 22);
+        el.innerText = isOpen ? "● Layanan Sedang Buka" : "● Layanan Sedang Tutup";
+        el.className = "status-badge " + (isOpen ? "status-open" : "status-closed");
+    }
+    setInterval(updateStatus, 60000);
+
+    function toggleMenu() {
+        document.getElementById('hamburger').classList.toggle('open');
+        document.getElementById('mobileMenu').classList.toggle('open');
+    }
+    function closeMenu() {
+        document.getElementById('hamburger').classList.remove('open');
+        document.getElementById('mobileMenu').classList.remove('open');
+    }
+    document.addEventListener('click', function(e) {
+        const ham = document.getElementById('hamburger'), menu = document.getElementById('mobileMenu');
+        if (!ham.contains(e.target) && !menu.contains(e.target)) closeMenu();
+    });
+
+    function showView(id) {
+        ['home-view','catalog-view','testimoni-view'].forEach(v => {
+            document.getElementById(v).style.display = v === id ? 'block' : 'none';
+        });
+        closeMenu(); window.scrollTo(0,0);
+    }
+    function showCatalog() { showView('catalog-view'); }
+    function showHome() { showView('home-view'); }
+    function showTestimoni() {
+        showView('testimoni-view');
+        if (window.loadTestimoniPage) loadTestimoniPage();
+    }
+
+    // ---- Double Tap Admin ----
+    let lastTap = 0;
+    document.getElementById('logo-btn').addEventListener('touchend', function(e) {
+        const now = Date.now();
+        if (now - lastTap < 350) { e.preventDefault(); openAdminModal(); }
+        lastTap = now;
+    });
+
+    function openAdminModal() {
+        if (isLocked()) {
+            const rem = getLockRemaining();
+            const menit = Math.floor(rem / 60), detik = rem % 60;
+            const t = document.getElementById('toast');
+            t.innerText = `🔒 Admin terkunci ${menit}m ${detik}s lagi`;
+            t.className = 'toast error'; t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 3500);
+            return;
+        }
+        document.getElementById('admin-modal').classList.add('open');
+        document.getElementById('pin-screen').style.display = 'block';
+        document.getElementById('secret-screen').style.display = 'none';
+        document.getElementById('admin-content').style.display = 'none';
+        document.getElementById('modal-pin').value = '';
+        document.getElementById('modal-secret').value = '';
+        setTimeout(() => document.getElementById('modal-pin').focus(), 100);
+    }
+    function closeAdminModal() {
+        document.getElementById('admin-modal').classList.remove('open');
+    }
+    document.getElementById('admin-modal').addEventListener('click', function(e) {
+        if (e.target === this) closeAdminModal();
+    });
+
+    // ---- Security System ----
+    const PIN_HASH = '0cc5733105c0a2abcf535eb58d0230e9aa2e9da0ea16e373d11aa4351537a096';
+    const SECRET_HASH = 'c5c99c41e92ad89fad29269f04f44ad9fbf550d40c559bee9796e7cfad5a55d6';
+    const MAX_ATTEMPTS = 3;
+    const LOCK_DURATION = 10 * 60 * 1000; // 10 menit
+
+    async function sha256(str) {
+        const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+        return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+    }
+
+    function isLocked() {
+        const lockUntil = parseInt(localStorage.getItem('admin_lock_until') || '0');
+        return Date.now() < lockUntil;
+    }
+
+    function getLockRemaining() {
+        const lockUntil = parseInt(localStorage.getItem('admin_lock_until') || '0');
+        return Math.ceil((lockUntil - Date.now()) / 1000);
+    }
+
+    function getAttempts() {
+        return parseInt(localStorage.getItem('admin_attempts') || '0');
+    }
+
+    function incrementAttempts() {
+        const attempts = getAttempts() + 1;
+        localStorage.setItem('admin_attempts', attempts);
+        if (attempts >= MAX_ATTEMPTS) {
+            localStorage.setItem('admin_lock_until', Date.now() + LOCK_DURATION);
+            localStorage.setItem('admin_attempts', '0');
+        }
+        return attempts;
+    }
+
+    function resetAttempts() {
+        localStorage.removeItem('admin_attempts');
+        localStorage.removeItem('admin_lock_until');
+    }
+
+    // Step 1: verifikasi PIN
+    async function verifyPin() {
+        if (isLocked()) {
+            const rem = getLockRemaining();
+            const menit = Math.floor(rem / 60), detik = rem % 60;
+            showPinError(`🔒 Terkunci! Coba lagi ${menit}m ${detik}s`);
+            return;
+        }
+
+        const pin = document.getElementById('modal-pin').value;
+        if (!pin) return;
+
+        const hash = await sha256(pin);
+        if (hash === PIN_HASH) {
+            resetAttempts();
+            // Lanjut ke step 2 — verifikasi nama
+            document.getElementById('pin-screen').style.display = 'none';
+            document.getElementById('secret-screen').style.display = 'block';
+            setTimeout(() => document.getElementById('modal-secret').focus(), 100);
+        } else {
+            const attempts = incrementAttempts();
+            const sisa = MAX_ATTEMPTS - attempts;
+            if (isLocked()) {
+                showPinError(`🔒 Terkunci 10 menit karena terlalu banyak percobaan!`);
+            } else {
+                showPinError(`PIN salah! Sisa percobaan: ${sisa}`);
+            }
+            document.getElementById('modal-pin').value = '';
+        }
+    }
+
+    // Step 2: verifikasi nama rahasia
+    async function verifySecret() {
+        const secret = document.getElementById('modal-secret').value;
+        if (!secret) return;
+
+        const hash = await sha256(secret);
+        if (hash === SECRET_HASH) {
+            document.getElementById('secret-screen').style.display = 'none';
+            document.getElementById('admin-content').style.display = 'block';
+            loadAdminCatalog();
+            loadAdminPorto();
+        } else {
+            const attempts = incrementAttempts();
+            const sisa = MAX_ATTEMPTS - attempts;
+            if (isLocked()) {
+                showSecretError(`🔒 Terkunci 10 menit!`);
+                document.getElementById('secret-screen').style.display = 'none';
+                document.getElementById('pin-screen').style.display = 'block';
+            } else {
+                showSecretError(`Nama verifikasi salah! Sisa: ${sisa}`);
+            }
+            document.getElementById('modal-secret').value = '';
+        }
+    }
+
+    function showPinError(msg) {
+        const el = document.getElementById('pin-error');
+        el.innerText = msg; el.style.display = 'block';
+        document.getElementById('modal-pin').style.borderColor = 'var(--primary-red)';
+        setTimeout(() => { el.style.display = 'none'; document.getElementById('modal-pin').style.borderColor = '#333'; }, 3000);
+    }
+
+    function showSecretError(msg) {
+        const el = document.getElementById('secret-error');
+        el.innerText = msg; el.style.display = 'block';
+        document.getElementById('modal-secret').style.borderColor = 'var(--primary-red)';
+        setTimeout(() => { el.style.display = 'none'; document.getElementById('modal-secret').style.borderColor = '#333'; }, 3000);
+    }
+
+    function switchTab(tabId, btn) {
+        document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.admin-tab-content').forEach(c => c.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById(tabId).classList.add('active');
+    }
+
+    // ---- Katalog Dinamis ----
+    let catalogItems = JSON.parse(localStorage.getItem('rafel_catalog') || 'null') || [
+        { id:'c1', title:'Website Landing Page', price:'Rp 50.000', cat:'development', img:'https://images.unsplash.com/photo-1547658719-da2b51169166?auto=format&fit=crop&w=500', wa:'Halo%20Rafel,%20mau%20order%20Landing%20Page', badge:'hot' },
+        { id:'c2', title:'Logo Art Design', price:'Rp 20.000', cat:'graphic', img:'https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=500', wa:'Halo%20Rafel,%20mau%20order%20Desain%20Logo', badge:'new' },
+        { id:'c3', title:'Cinematic Video Edit', price:'Rp 50.000', cat:'editor', img:'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=500', wa:'Halo%20Rafel,%20mau%20order%20Edit%20Video', badge:'' },
+        { id:'c4', title:'Website E-Commerce', price:'Rp 150.000', cat:'development', img:'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=500', wa:'Halo%20Rafel,%20mau%20order%20Toko%20Online', badge:'' }
+    ];
+
+    let portoItems = JSON.parse(localStorage.getItem('rafel_porto') || 'null') || [
+        { id:'p1', title:'Editing / Desain Logo', label:'Editing / Desain', img:'https://i.imgur.com/aujVMe6.png', link:'https://pratamamoriski-cyber.github.io/portofolio-/' },
+        { id:'p2', title:'Website Custom', label:'Web Development', img:'https://i.imgur.com/1PAw88K.png', link:'https://pratamamoriski-cyber.github.io/portofolio-/' }
+    ];
+
+    function saveCatalog() { localStorage.setItem('rafel_catalog', JSON.stringify(catalogItems)); }
+    function savePorto() { localStorage.setItem('rafel_porto', JSON.stringify(portoItems)); }
+
+    function renderCatalog() {
+        const grid = document.getElementById('full-catalog');
+        grid.innerHTML = catalogItems.map(i => `
+            <div class="product-card item" data-cat="${i.cat}">
+                <div class="product-img-wrap"><img src="${i.img}" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1547658719-da2b51169166?auto=format&fit=crop&w=500'"></div>
+                <div class="product-info">
+                    <span class="product-category">${i.cat === 'development' ? 'Web Development' : i.cat === 'graphic' ? 'Graphic Design' : 'Video Editor'}</span>
+                    <h3 class="product-title">${i.title} ${i.badge === 'hot' ? '<span class="badge badge-hot">🔥 Terlaris</span>' : i.badge === 'new' ? '<span class="badge badge-new">✨ Baru</span>' : ''}</h3>
+                    <p class="price">${i.price}</p>
+                    <a href="https://wa.me/6283116098203?text=${i.wa}" class="buy-btn"><i class="fab fa-whatsapp"></i> Pilih Jasa</a>
+                </div>
+            </div>`).join('');
+
+        // Juga update home grid (2 item pertama)
+        const homeGrid = document.querySelector('#home-view .grid');
+        if (homeGrid) {
+            homeGrid.innerHTML = catalogItems.slice(0,2).map(i => `
+                <div class="product-card">
+                    <div class="product-img-wrap"><img src="${i.img}" class="product-img"></div>
+                    <div class="product-info">
+                        <span class="product-category">${i.cat === 'development' ? 'Web Development' : i.cat === 'graphic' ? 'Graphic Design' : 'Video Editor'}</span>
+                        <h3 class="product-title">${i.title} ${i.badge === 'hot' ? '<span class="badge badge-hot">🔥 Terlaris</span>' : i.badge === 'new' ? '<span class="badge badge-new">✨ Baru</span>' : ''}</h3>
+                        <p class="price">${i.price}</p>
+                        <a href="https://wa.me/6283116098203?text=${i.wa}" class="buy-btn"><i class="fab fa-whatsapp"></i> Order Sekarang</a>
+                    </div>
+                </div>`).join('');
+        }
+    }
+
+    function renderPorto() {
+        const grid = document.querySelector('.porto-grid');
+        if (!grid) return;
+        grid.innerHTML = portoItems.map(p => `
+            <div class="porto-card">
+                <img src="${p.img}" alt="${p.title}" onerror="this.src='https://images.unsplash.com/photo-1547658719-da2b51169166?auto=format&fit=crop&w=600'">
+                <div class="porto-overlay">
+                    <span class="porto-label">${p.label}</span>
+                    <span class="porto-title">${p.title}</span>
+                    <a href="${p.link||'#'}" target="_blank" class="porto-cta">Lihat Detail →</a>
+                </div>
+            </div>`).join('');
+    }
+
+    function loadAdminCatalog() {
+        const list = document.getElementById('admin-catalog-list');
+        list.innerHTML = catalogItems.map(i => `
+            <div class="admin-catalog-item">
+                <img src="${i.img}" onerror="this.src='https://images.unsplash.com/photo-1547658719-da2b51169166?auto=format&fit=crop&w=100'">
+                <div class="admin-catalog-item-info">
+                    <strong>${i.title}</strong>
+                    <span>${i.price}</span>
+                </div>
+                <div class="admin-catalog-actions">
+                    <button class="btn-del" onclick="deleteKatalog('${i.id}')"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>`).join('') || '<p style="color:var(--text-gray);font-size:0.85rem;">Belum ada katalog.</p>';
+    }
+
+    function loadAdminPorto() {
+        const list = document.getElementById('admin-porto-list');
+        list.innerHTML = portoItems.map(p => `
+            <div class="admin-porto-item">
+                <img src="${p.img}" onerror="this.src='https://images.unsplash.com/photo-1547658719-da2b51169166?auto=format&fit=crop&w=400'">
+                <div class="admin-porto-item-body">
+                    <span>${p.title}</span>
+                    <button class="btn-del" onclick="deletePorto('${p.id}')"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>`).join('') || '<p style="color:var(--text-gray);font-size:0.85rem;">Belum ada portofolio.</p>';
+    }
+
+    function addKatalog() {
+        const title = document.getElementById('kat-title').value.trim();
+        const price = document.getElementById('kat-price').value.trim();
+        const cat = document.getElementById('kat-cat').value;
+        const img = document.getElementById('kat-img').value.trim();
+        const wa = document.getElementById('kat-wa').value.trim() || `Halo%20Rafel,%20mau%20order%20${encodeURIComponent(title)}`;
+        if (!title) return alert('Nama jasa wajib diisi!');
+        catalogItems.push({ id: 'c'+Date.now(), title, price: price||'Hubungi Kami', cat, img: img||'https://images.unsplash.com/photo-1547658719-da2b51169166?auto=format&fit=crop&w=500', wa, badge:'' });
+        saveCatalog(); renderCatalog(); loadAdminCatalog();
+        ['kat-title','kat-price','kat-img','kat-wa'].forEach(id => document.getElementById(id).value='');
+        showToastAdmin('✅ Katalog berhasil ditambahkan!');
+    }
+
+    function deleteKatalog(id) {
+        if (!confirm('Hapus item ini?')) return;
+        catalogItems = catalogItems.filter(i => i.id !== id);
+        saveCatalog(); renderCatalog(); loadAdminCatalog();
+        showToastAdmin('🗑️ Katalog dihapus.');
+    }
+
+    function addPorto() {
+        const title = document.getElementById('porto-title').value.trim();
+        const label = document.getElementById('porto-label').value.trim();
+        const link = document.getElementById('porto-link').value.trim();
+        const img = document.getElementById('porto-img').value.trim();
+        if (!title || !img) return alert('Judul dan URL foto wajib diisi!');
+        portoItems.push({ id: 'p'+Date.now(), title, label: label||'Portofolio', img, link: link||'#' });
+        savePorto(); renderPorto(); loadAdminPorto();
+        ['porto-title','porto-label','porto-link','porto-img'].forEach(id => document.getElementById(id).value='');
+        showToastAdmin('✅ Portofolio berhasil ditambahkan!');
+    }
+
+    function deletePorto(id) {
+        if (!confirm('Hapus portofolio ini?')) return;
+        portoItems = portoItems.filter(p => p.id !== id);
+        savePorto(); renderPorto(); loadAdminPorto();
+        showToastAdmin('🗑️ Portofolio dihapus.');
+    }
+
+    function showToastAdmin(msg) {
+        const t = document.getElementById('toast');
+        t.innerText = msg; t.className = 'toast'; t.classList.add('show');
+        setTimeout(() => t.classList.remove('show'), 3000);
+    }
+
+    function filterCategory(cat, btn) {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll('.item').forEach(item => {
+            item.style.animation = 'none'; item.offsetHeight;
+            item.style.animation = 'fadeIn 0.4s ease-out';
+            item.style.display = (cat === 'all' || item.dataset.cat === cat) ? 'block' : 'none';
+        });
+    }
+    function filterProducts() {
+        const input = document.querySelector('.search-bar').value.toLowerCase();
+        document.querySelectorAll('.item').forEach(item => {
+            item.style.display = item.querySelector('.product-title').innerText.toLowerCase().includes(input) ? 'block' : 'none';
+        });
+    }
+    window.addEventListener('scroll', () => {
+        document.getElementById('scrollTop').classList.toggle('visible', window.scrollY > 300);
+    });
+
+    // Init render
+    renderCatalog();
+    renderPorto();
+</script>
+</body>
+</html>
